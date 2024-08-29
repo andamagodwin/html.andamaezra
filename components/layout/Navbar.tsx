@@ -16,8 +16,7 @@ const Navbar = () => {
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center">
                             <button onClick={toggleSideNav} className="text-white mr-4 focus:outline-none lg:hidden">
-                                <Menu className="h-5 w-5 bg-red-600" />
-                                <User2/>
+                                <Menu className="h-5 w-5" />
                             </button>
                             <span className="text-white text-2xl font-bold font-mono">html.andama</span>
                         </div>
