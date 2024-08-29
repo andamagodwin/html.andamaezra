@@ -40,40 +40,8 @@ const courseOutline = [
     }
 ];
 
-interface LessonItemProps {
-    lesson: Lesson;
-    onSelect: (lesson: Lesson) => void;
-}
-interface SectionProgressProps {
-    lessons: Lesson[];
-}
-interface Lesson {
-    id: string;
-    title: string;
-    description: string;
-    completed: boolean;
-}
 
-interface Section {
-    id: string;
-    title: string;
-    description: string;
-    lessons: Lesson[];
-}
-
-interface SectionProps {
-    section: Section;
-    onSelectLesson: (sectionId: string, lessonId: string) => void;
-}
-
-interface CourseOutlineProps {
-    courseData: Section[];
-    onSelectLesson: (sectionId: string, lessonId: string) => void;
-}
-
-
-
-const LessonItem: React.FC<LessonItemProps> = ({ lesson, onSelect }) => (
+const LessonItem = ({ lesson, onSelect }) => (
     <div className="flex items-center justify-between py-2 border-b last:border-b-0">
         <div className="flex items-center">
             {lesson.completed ? (
@@ -92,8 +60,7 @@ const LessonItem: React.FC<LessonItemProps> = ({ lesson, onSelect }) => (
     </div>
 );
 
-
-const SectionProgress: React.FC<SectionProgressProps> = ({ lessons }) => {
+const SectionProgress = ({ lessons }) => {
     const completedLessons = lessons.filter(lesson => lesson.completed).length;
     const progress = (completedLessons / lessons.length) * 100;
 
@@ -107,8 +74,7 @@ const SectionProgress: React.FC<SectionProgressProps> = ({ lessons }) => {
     );
 };
 
-
-const Section: React.FC<SectionProps> = ({ section, onSelectLesson }) => {
+const Section = ({ section, onSelectLesson }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -141,8 +107,7 @@ const Section: React.FC<SectionProps> = ({ section, onSelectLesson }) => {
     );
 };
 
-
-const CourseOutline: React.FC<CourseOutlineProps> = ({ onSelectLesson, courseData }) => {
+const CourseOutline = ({ onSelectLesson, courseData }) => {
     return (
         <div className="w-full max-w-4xl mx-auto">
             <h1 className="text-3xl font-bold text-center mb-8">HTML Learning Path</h1>
@@ -157,17 +122,17 @@ const CourseOutline: React.FC<CourseOutlineProps> = ({ onSelectLesson, courseDat
     );
 };
 
+const Courses = () => {
+    const [selectedLesson, setSelectedLesson] = useState(null);
+    const [courseData, setCourseData] = useState(courseOutline);
 
-const Courses: React.FC = () => {
-    const [selectedLesson, setSelectedLesson] = useState<{ sectionId: string; lessonId: string } | null>(null);
-    const [courseData, setCourseData] = useState<Section[]>(courseOutline);
-
-    const handleSelectLesson = (sectionId: string, lessonId: string) => {
+    const handleSelectLesson = (sectionId, lessonId) => {
         setSelectedLesson({ sectionId, lessonId });
+        // Here you would typically load the selected lesson content
         console.log(`Selected lesson: ${sectionId} - ${lessonId}`);
     };
 
-    const handleCompletelesson = (sectionId: string, lessonId: string) => {
+    const handleCompletelesson = (sectionId, lessonId) => {
         setCourseData(prevData =>
             prevData.map(section =>
                 section.id === sectionId
@@ -188,6 +153,7 @@ const Courses: React.FC = () => {
             <div className="container mx-auto px-4">
                 {selectedLesson ? (
                     <div>
+                        {/* Placeholder for the actual lesson content */}
                         <h2 className="text-2xl font-bold mb-4">Lesson Content: {selectedLesson.sectionId} - {selectedLesson.lessonId}</h2>
                         <button
                             onClick={() => handleCompletelesson(selectedLesson.sectionId, selectedLesson.lessonId)}
